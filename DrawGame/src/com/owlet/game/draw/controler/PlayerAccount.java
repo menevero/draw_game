@@ -1,8 +1,16 @@
-package com.owlet.game.draw.data;
+package com.owlet.game.draw.controler;
 
 import java.util.ArrayList;
 
-/* 임시 플레이어 객체 */
+import com.owlet.game.draw.data.Character;
+
+/**
+ * 현재 로그인된 계정 정보를 가지고 있을 클래스입니다.
+ * 이 클래스의 인스턴스는 AccountManager 객체 안에만 존재합니다.
+ * 
+ * @version 1.0
+ * @since 17-09-21
+ */
 public class PlayerAccount {
 	//============================================
 	//
@@ -10,9 +18,7 @@ public class PlayerAccount {
 	//
 	//============================================
 
-	private String identification;
-	private int money = 100;
-
+	private String identifier;
 	private ArrayList<Character> playerBelongedCharacters = new ArrayList<Character>();
 	//	private ArrayList<Character> playerBelongedEquipments = new ArrayList<Character>();
 
@@ -24,15 +30,14 @@ public class PlayerAccount {
 	//		Utilities
 	//
 	//============================================
-
-	/*
-	 * 새로운 캐릭터 객체를 넣는 메소드
-	 */
+	
+	/** 새로운 캐릭터 객체를 넣는 메소드 */
 	public boolean addCharacter(Character newCharacter) {
 		if(this.playerBelongedCharacters.size() == 10) {
 			return false;
 		}
 		else {
+			//TODO DB연동시키기
 			this.playerBelongedCharacters.add(newCharacter);
 			return true;
 		}
@@ -57,6 +62,7 @@ public class PlayerAccount {
 	//
 	//============================================
 
+	/*
 	public void addMoney(int additionalMoney) {
 		this.money += additionalMoney;
 		//System.out.println("정상적으로 입금되었습니다.");
@@ -71,18 +77,18 @@ public class PlayerAccount {
 			this.money -= value;
 			return true;
 		}
-	}
+	}*/
 	
-	public ArrayList<Character> getCharacterList() {
+	public ArrayList<Character> getPlayerBlongedCharacterList() {
 		return this.playerBelongedCharacters;
 	}
 
 	public void setPlayerIdentfication(String newIdentification) {
-		this.identification = newIdentification;
+		this.identifier = newIdentification;
 	}
 
 	public String getPlayerIdentfication() {
-		return this.identification;
+		return this.identifier;
 	}
 
 	public int getNumberOfBelongedCharacters() {

@@ -1,14 +1,21 @@
-package com.owlet.game.draw.data;
+package com.owlet.game.draw.controler;
 
-public class Login {
+/**
+ * 로그인 세션 및 로그인된 계정의 관리를 맡고 있는 컨트롤러 클래스입니다.
+ * 
+ * @version 1.0
+ * @since 17-09-21
+ */
+public class AccountManager {
 	//============================================
 	//
 	//		Variables
 	//
 	//============================================
 	
-	private String identification;
+	private String identifier;
 	private String password;
+	private PlayerAccount playerAccount = new PlayerAccount();  //임시로 만들어져 있는 플레이어임
 	
 	
 	
@@ -25,7 +32,7 @@ public class Login {
 	 */
 	public boolean startLogin() {
 		//TODO 로그인 시작
-		this.identification = null;
+		this.identifier = null;
 		this.password = null;
 		return false;
 	}
@@ -34,13 +41,13 @@ public class Login {
 	 * 아이디 값을 문자열 비교하여 boolean 값 리턴
 	 */
 	public boolean isIDCorrect(String id) {
-		this.identification = id;
-		if(this.identification.equals("id")) {
-			System.out.println(identification);
+		this.identifier = id;
+		if(this.identifier.equals("id")) {
+			System.out.println(identifier);
 			return true;
 		}
 		else {
-			this.identification = null;
+			this.identifier = null;
 			this.password = null;
 			return false;
 		}
@@ -56,9 +63,23 @@ public class Login {
 			return true;
 		}
 		else {
-			this.identification = null;
+			this.identifier = null;
 			this.password = null;
 			return false;
 		}
+	}
+	
+	
+	
+	
+	//============================================
+	//
+	//		Accessors
+	//
+	//============================================
+	
+	/** 로그인된 계정 정보를 리턴합니다. */
+	public PlayerAccount getPlayerAccount() {
+		return this.playerAccount;
 	}
 }

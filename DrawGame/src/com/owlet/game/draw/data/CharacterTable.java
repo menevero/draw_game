@@ -1,5 +1,13 @@
 package com.owlet.game.draw.data;
 
+import com.owlet.game.draw.ui.Images;
+
+/**
+ * 게임에 쓰일 여러 캐릭터들에 대한 기본 정보를 가지고 있는 클래스입니다.
+ * 
+ * @version 1.0
+ * @since 17-09-21
+ */
 public class CharacterTable {
 	public static final Character CHARS_NULL = new Character(0, "NULL_CHARACTER", "NULL.", 0, 0, 0, Images.CHARACTER_NULL_CHARACTER);
 	

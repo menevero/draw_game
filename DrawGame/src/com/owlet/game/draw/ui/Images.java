@@ -1,4 +1,4 @@
-package com.owlet.game.draw.data;
+package com.owlet.game.draw.ui;
 
 /* 각 이미지는 버튼의 경우 normal - pressed - rollovered 순서로 배열에 경로가 들어있음 */
 public class Images {

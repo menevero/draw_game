@@ -2,9 +2,13 @@ package com.owlet.game.draw.controler;
 
 import com.owlet.game.draw.data.Character;
 import com.owlet.game.draw.data.CharacterTable;
-import com.owlet.game.draw.data.Dice;
-import com.owlet.game.draw.data.PlayerAccount;
 
+/**
+ * 랜덤한 캐릭터를 생성해 현재 로그인된 계정의 인벤토리에 삽입시키는 컨트롤러입니다.
+ * 
+ * @version 1.0
+ * @since 17-09-21
+ */
 public class CharacterDrawer {
 	//============================================
 	//
@@ -25,10 +29,14 @@ public class CharacterDrawer {
 	//
 	//============================================
 
-	public CharacterDrawer(CharacterTable characterTable, PlayerAccount player, Dice dice) {
+	/**
+	 * @param CharacterTable characterTable - 캐릭터 데이터입니다.
+	 * @param PlayerAccount player - 이 객체가 캐릭터를 생성해서 집어넣을 목표 계정입니다.
+	 */
+	public CharacterDrawer(CharacterTable characterTable, PlayerAccount player) {
 		this.characterTable = characterTable;
 		this.player = player;
-		this.dice = dice;
+		this.dice = new Dice(characterTable.CHARS_INFERIOR.length, characterTable.CHARS_NORMAL.length, characterTable.CHARS_MAGIC.length, characterTable.CHARS_RARE.length, characterTable.CHARS_UNIQUE.length);
 	}
 
 

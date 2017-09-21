@@ -2,8 +2,9 @@ package com.owlet.game.draw.ui;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+
+import com.owlet.game.draw.controler.GameMasterController;
 import com.owlet.game.draw.data.Character;
-import com.owlet.game.draw.data.SharedData;
 
 public class ConsoleInterface {
 	//============================================
@@ -15,7 +16,7 @@ public class ConsoleInterface {
 	private Scanner scanner;
 	private Integer input;
 	private Character tempCharacter;
-	private SharedData sharedData;
+	private GameMasterController gameMasterController;
 	
 	private String id;
 	private String password;
@@ -29,10 +30,10 @@ public class ConsoleInterface {
 	//
 	//============================================
 
-	public ConsoleInterface(SharedData sharedData, Integer input, Scanner scanner) {
-		this.sharedData = sharedData;
+	public ConsoleInterface(GameMasterController gameMasterController, Integer input) {
+		this.gameMasterController = gameMasterController;
 		this.input = input;
-		this.scanner = scanner;
+		this.scanner = new Scanner(System.in);
 	}
 
 
@@ -56,7 +57,7 @@ public class ConsoleInterface {
 				scanner.nextLine();
 				System.out.println("아이디를 입력해 주십시오.");
 				id = scanner.nextLine();
-				if(sharedData.getLogin().isIDCorrect(id) == false) {
+				if(gameMasterController.getAccountManager().isIDCorrect(id) == false) {
 					id = null;
 					System.out.println("일치하는 아이디가 없습니다.");
 					continue;
@@ -64,13 +65,13 @@ public class ConsoleInterface {
 				else {
 					System.out.println("패스워드를 입력해 주십시오.");
 					password = scanner.nextLine();
-					if(sharedData.getLogin().isPasswordCorrect(password) == false) {
+					if(gameMasterController.getAccountManager().isPasswordCorrect(password) == false) {
 						password = null;
 						System.out.println("패스워드가 틀립니다.");
 						continue;
 					}
 					else {
-						if(sharedData.getLogin().startLogin() == false) {
+						if(gameMasterController.getAccountManager().startLogin() == false) {
 							System.out.println("로그인에 실패하였습니다. 0");	
 						}
 						else {
@@ -208,7 +209,7 @@ public class ConsoleInterface {
 	 */
 	private void showDrawingCharacter() {
 		Character tempCharacter;
-		tempCharacter = sharedData.getCharacterDrawer().startDraw();
+		tempCharacter = gameMasterController.getCharacterDrawer().startDraw();
 
 		if(tempCharacter == null) {
 			System.out.println("이미 캐릭터 보관함이 꽉 찼습니다.");
@@ -223,7 +224,7 @@ public class ConsoleInterface {
 	 */
 	private boolean showRemovingCharacter() {
 		while(true) {
-			if(sharedData.getPlayer().getNumberOfBelongedCharacters() == 0) {
+			if(gameMasterController.getAccountManager().getPlayerAccount().getNumberOfBelongedCharacters() == 0) {
 				System.out.println("소유하고 있는 캐릭터가 없습니다.");
 				return false;
 			}
@@ -239,13 +240,13 @@ public class ConsoleInterface {
 				return false;
 			}
 
-			if(input.intValue() <= 0 || input.intValue() > sharedData.getPlayer().getNumberOfBelongedCharacters()) {
+			if(input.intValue() <= 0 || input.intValue() > gameMasterController.getAccountManager().getPlayerAccount().getNumberOfBelongedCharacters()) {
 				System.out.println("잘못된 인덱스 입력입니다. : " + input);
 				scanner.nextLine();
 				continue;
 			}
 			else {
-				if(sharedData.getPlayer().removeCharacter(input - 1)) {
+				if(gameMasterController.getAccountManager().getPlayerAccount().removeCharacter(input - 1)) {
 					System.out.println("정상적으로 삭제되었습니다.");
 					continue;
 				}
@@ -261,12 +262,12 @@ public class ConsoleInterface {
 	 * 캐릭터 목록을 출력하는 메소드(리턴값 없음)
 	 */
 	private void showBelongedCharacters() {
-		if(sharedData.getPlayer().getNumberOfBelongedCharacters() == 0) {
+		if(gameMasterController.getAccountManager().getPlayerAccount().getNumberOfBelongedCharacters() == 0) {
 			System.out.println("보유하고 있는 캐릭터가 없습니다.");
 		}
 		else {
-			for(int i = 0; i < sharedData.getPlayer().getNumberOfBelongedCharacters(); i++) {
-				tempCharacter = sharedData.getPlayer().getSpecificCharacter(i);
+			for(int i = 0; i < gameMasterController.getAccountManager().getPlayerAccount().getNumberOfBelongedCharacters(); i++) {
+				tempCharacter = gameMasterController.getAccountManager().getPlayerAccount().getSpecificCharacter(i);
 				System.out.println("\n" + "[" + (i + 1) + "]" + "캐릭터 이름 : " + tempCharacter.getCharacterName());
 				System.out.println(tempCharacter.getFlavorText() + "\n");
 			}

@@ -1,6 +1,6 @@
 package com.owlet.game.draw.data;
 
-import java.util.Scanner;
+import com.owlet.game.draw.controler.GameMasterController;
 import com.owlet.game.draw.ui.MainFrame;
 
 public class Main {
@@ -11,10 +11,10 @@ public class Main {
 	/* Main, GamePanel, GamePanelGlobalVars, Login 등 */
 	
 	public static void main(String[] args) {
-		Scanner scanner =  new Scanner(System.in);
-		SharedData sharedData = new SharedData(scanner);
-		//ConsoleInterface runner = new ConsoleInterface(sharedData, input, scanner);
-		MainFrame runner = new MainFrame(sharedData);
+		//ConsoleInterface runner = new ConsoleInterface(gameMasterController, input);
+		
+		GameMasterController gameMasterController = new GameMasterController();
+		MainFrame runner = new MainFrame(gameMasterController);
 		
 		runner.run();
 	}

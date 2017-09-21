@@ -13,8 +13,7 @@ import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
-import com.owlet.game.draw.data.Images;
-import com.owlet.game.draw.data.SharedData;
+import com.owlet.game.draw.controler.GameMasterController;
 
 @SuppressWarnings("serial")
 public class MainPanel extends JPanel {
@@ -32,13 +31,15 @@ public class MainPanel extends JPanel {
 	//
 	//============================================
 	
-	int[] frameSize;
-	SharedData sharedData;
+	GameMasterController gameMasterController;
+	
+	int frameWidth;
+	int frameHeight;
 	
 	/* mainMenu */
-	InvisibleJButton loginButton;
-	InvisibleJButton signUpButton;
-	InvisibleJButton programExitButton;
+	ImageIconButton loginButton;
+	ImageIconButton signUpButton;
+	ImageIconButton programExitButton;
 	
 	/* gameMenu */
 	JButton showCharactersButton;
@@ -50,17 +51,16 @@ public class MainPanel extends JPanel {
 	JTextField idField;
 	JTextField passwordField;
 	JDialog failedDialog;
-	InvisibleJButton tryLoginButton;
+	ImageIconButton tryLoginButton;
 	JButton abortButton;
 	/* showLoginFailed */
 	JLabel loginFailedMessage;
-	InvisibleJButton gotoLoginButton;
+	ImageIconButton gotoLoginButton;
 	
 	/* showCharacters */
 	JScrollPane scrollPane;
 	JTable characterShowTable;
-	InvisibleJButton beforeButton;
-	InvisibleJButton nextButton;
+	JButton gotoGameMenuButton;
 	
 
 	
@@ -72,9 +72,17 @@ public class MainPanel extends JPanel {
 	//
 	//============================================
 	
-	public MainPanel(SharedData sharedData, int[] frameSize) {
-		this.frameSize = frameSize;
-		this.sharedData = sharedData;
+	/**
+	 * @param GameMasterController gameMasterController - 게임 마스터 컨트롤러
+	 * @param int frameWidth - 프레임의 가로 길이
+	 * @param int frameHeight - 프레임의 세로 길이
+	 */
+	public MainPanel(GameMasterController gameMasterController, int frameWidth, int frameHeight) {
+		this.gameMasterController = gameMasterController;
+		this.frameWidth = frameWidth;
+		this.frameHeight = frameHeight;
+		
+		setEnabled(false);
 		initializeComponents();
 		showMainMenu();
 	}
@@ -95,7 +103,7 @@ public class MainPanel extends JPanel {
 		//	mainMenu
 		//=========================
 		/* 로그인 화면으로 넘어가는 버튼 */
-		loginButton = new InvisibleJButton(Images.BUTTON_MAIN_LOGIN);
+		loginButton = new ImageIconButton(Images.BUTTON_MAIN_LOGIN);
 		loginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -107,7 +115,7 @@ public class MainPanel extends JPanel {
 		});
 		
 		/* 화원가입 화면으로 넘어가는 버튼 */
-		signUpButton = new InvisibleJButton(Images.BUTTON_MAIN_SIGNIN);
+		signUpButton = new ImageIconButton(Images.BUTTON_MAIN_SIGNIN);
 		signUpButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -119,7 +127,7 @@ public class MainPanel extends JPanel {
 		});
 		
 		/* 프로그램 종료(0리턴) */
-		programExitButton = new InvisibleJButton(Images.BUTTON_MAIN_EXIT);
+		programExitButton = new ImageIconButton(Images.BUTTON_MAIN_EXIT);
 		programExitButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -172,6 +180,9 @@ public class MainPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				removeAll();
+				// TODO 로그아웃 조치
+				//sharedData.getLogin().
+				//sharedData.getPlayer().initializeLoginInformation();
 				showMainMenu();
 				validate();
 				repaint();
@@ -205,7 +216,7 @@ public class MainPanel extends JPanel {
 		});
 		
 		/* 텍스트필드에 입력된 텍스트값을 넘겨서 로그인 시작 */
-		tryLoginButton = new InvisibleJButton(Images.BUTTON_MAIN_LOGIN);
+		tryLoginButton = new ImageIconButton(Images.BUTTON_MAIN_LOGIN);
 		tryLoginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
@@ -228,10 +239,10 @@ public class MainPanel extends JPanel {
 					validate();
 					repaint();
 				}
-				else if(sharedData.getLogin().isIDCorrect(idField.getText().toString()) == true && sharedData.getLogin().isPasswordCorrect(passwordField.getText().toString()) == true) {
+				else if(gameMasterController.getAccountManager().isIDCorrect(idField.getText().toString()) == true && gameMasterController.getAccountManager().isPasswordCorrect(passwordField.getText().toString()) == true) {
 					System.out.println("정상적으로 로그인되었습니다");
 					passwordField.setText("");
-					sharedData.getLogin().startLogin();
+					gameMasterController.getAccountManager().startLogin();
 					removeAll();
 					showGameMenu();
 					validate();
@@ -255,12 +266,23 @@ public class MainPanel extends JPanel {
 		loginFailedMessage.setHorizontalTextPosition(SwingConstants.CENTER);
 		
 		/* 다시 로그인창으로 돌아가는 버튼 */
-		gotoLoginButton = new InvisibleJButton(Images.BUTTON_LOGIN_SESSION_BACK);
+		gotoLoginButton = new ImageIconButton(Images.BUTTON_LOGIN_SESSION_BACK);
 		gotoLoginButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				removeAll();
 				showLoginWindow();
+				validate();
+				repaint();
+			}
+		});
+		
+		gotoGameMenuButton = new JButton("돌아가기");
+		gotoGameMenuButton.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				removeAll();
+				showGameMenu();
 				validate();
 				repaint();
 			}
@@ -277,7 +299,7 @@ public class MainPanel extends JPanel {
 	/** 보유한 캐릭터 확인하는 창 */
 	private void showCharactersWindow() {
 		/* 테이블 선언 / 초기화 */
-		characterShowTable = new CharacterCardShowTable(sharedData.getPlayer().getCharacterList());
+		characterShowTable = new CharacterCardShowTable(gameMasterController.getAccountManager().getPlayerAccount().getPlayerBlongedCharacterList());
 		
 		scrollPane = new JScrollPane(characterShowTable);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
@@ -288,6 +310,9 @@ public class MainPanel extends JPanel {
 		scrollPane.setVisible(true);
 		scrollPane.validate();
 		scrollPane.repaint();
+		
+		add(gotoGameMenuButton);
+		gotoGameMenuButton.setBounds(0, 0, 100, 100);
 	}
 	
 	/** 로그인창 */
@@ -305,7 +330,7 @@ public class MainPanel extends JPanel {
 		if(situation == LOGIN_ERROR_ALL) {
 			loginFailedMessage.setText("아이디와 패스워드를 입력해 주십시오.");
 			//TODO 아래 캐릭터 생성 코드 삭제할 것
-			sharedData.getCharacterDrawer().startDraw();
+			gameMasterController.getCharacterDrawer().startDraw();
 		}
 		else if(situation == LOGIN_ERROR_ID) {
 			loginFailedMessage.setText("아이디를 입력해 주십시오.");
@@ -340,10 +365,10 @@ public class MainPanel extends JPanel {
 	private void showMainMenu() {
 		setLayout(null);
 		add(loginButton);
-		loginButton.setBounds(SIZE_MAIN_BUTTON_DISTANCE, frameSize[1] - 300, loginButton.getWidth(), loginButton.getHeight());
+		loginButton.setBounds(SIZE_MAIN_BUTTON_DISTANCE, frameHeight - 300, loginButton.getWidth(), loginButton.getHeight());
 		add(signUpButton);
-		signUpButton.setBounds(SIZE_MAIN_BUTTON_DISTANCE, frameSize[1] - 208, loginButton.getWidth(), loginButton.getHeight());
+		signUpButton.setBounds(SIZE_MAIN_BUTTON_DISTANCE, frameHeight - 208, loginButton.getWidth(), loginButton.getHeight());
 		add(programExitButton);
-		programExitButton.setBounds(SIZE_MAIN_BUTTON_DISTANCE, frameSize[1] - 130, loginButton.getWidth(), loginButton.getHeight());
+		programExitButton.setBounds(SIZE_MAIN_BUTTON_DISTANCE, frameHeight - 130, loginButton.getWidth(), loginButton.getHeight());
 	}
 }

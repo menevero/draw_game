@@ -1,4 +1,4 @@
-package com.owlet.game.draw.data;
+package com.owlet.game.draw.controler;
 
 import java.util.Random;
 
@@ -42,37 +42,27 @@ public class Dice {
 		return this.random.nextInt(100) + 1;
 	}
 	
-	/*
-	 * 1랭크 캐릭터 랜덤
-	 */
+	/** 1랭크 캐릭터 랜덤 */
 	public int rollRankUnique() {
 		return random.nextInt(numberOfCharacters[0]);
 	}
 	
-	/*
-	 * 2랭크 캐릭터 랜덤
-	 */
+	/** 2랭크 캐릭터 랜덤 */
 	public int rollRankRare() {
 		return random.nextInt(numberOfCharacters[1]);
 	}
 	
-	/*
-	 * 3랭크 캐릭터 랜덤
-	 */
+	/** 3랭크 캐릭터 랜덤 */
 	public int rollRankMagic() {
 		return random.nextInt(numberOfCharacters[2]);
 	}
 	
-	/*
-	 * 4랭크 캐릭터 랜덤
-	 */
+	/** 4랭크 캐릭터 랜덤 */
 	public int rollRankNormal() {
 		return random.nextInt(numberOfCharacters[3]);
 	}
 	
-	/*
-	 * 5랭크 캐릭터 랜덤
-	 */
+	/** 5랭크 캐릭터 랜덤 */
 	public int rollRankInferior() {
 		return random.nextInt(numberOfCharacters[4]);
 	}
