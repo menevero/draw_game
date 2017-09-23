@@ -11,7 +11,7 @@ import com.owlet.game.draw.controler.PlayerAccount;
 import com.owlet.game.draw.ui.MainFrame;
 
 /**
- * 캐릭터나 아이템을 뽑는 패널입니다.
+ * 캐릭터를 뽑는 패널입니다.
  * 
  * @version 1.0
  * @since 17-09-23
@@ -49,8 +49,8 @@ public class DrawingPanel extends JPanel {
 	 */
 	public DrawingPanel(MainFrame frame, JPanel previousPanel) {
 		this.frame = frame;
-		this.playerAccount = frame.gameMasterController.getAccountManager().getPlayerAccount();
-		this.characterDrawer = frame.gameMasterController.getCharacterDrawer();
+		this.playerAccount = MainFrame.getGameMasterController().getAccountManager().getPlayerAccount();
+		this.characterDrawer = MainFrame.getGameMasterController().getCharacterDrawer();
 		this.previousPanel = previousPanel;
 
 		initializeComponents();
@@ -77,7 +77,7 @@ public class DrawingPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				//characterDrawer.startDraw();
 				setVisible(false);
-				frame.add(new ShowNewCharacterPanel(frame, thisPanel, characterDrawer.startDraw()));
+				frame.add(new ShowCharacterPanel(frame, thisPanel, characterDrawer.startDraw(), ShowCharacterPanel.SHOW_NEW_CHARACTER));
 			}
 		});
 

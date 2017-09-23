@@ -8,12 +8,14 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import com.owlet.game.draw.data.Character;
 import com.owlet.game.draw.data.CharacterTable;
+import com.owlet.game.draw.ui.panels.ShowCharacterPanel;
 
 @SuppressWarnings("serial")
 /**
@@ -28,42 +30,48 @@ public class CharacterCardShowTable extends JTable {
 	//		Constant
 	//
 	//============================================
-	
+
 	private static final int MOUSE_EXITED = -1;
-	
-	
-	
-	
+
+
+
+
 	//============================================
 	//
 	//		Variables
 	//
 	//============================================
-	
+
 	int rolloveredRow = MOUSE_EXITED;
 	int rolloveredColumn = MOUSE_EXITED;
 	ArrayList<Character> characterList = new ArrayList<Character>();
-	
-	
-	
-	
+
+	JPanel previousPanel;
+	MainFrame frame;
+
+
+
+
 	//============================================
 	//
 	//		Constructor
 	//
 	//============================================
-	
-	public CharacterCardShowTable(ArrayList<Character> characterList) {
+
+	public CharacterCardShowTable(ArrayList<Character> characterList, JPanel previousPanel, MainFrame frame) {
+		this.previousPanel = previousPanel;
+		this.frame = frame;
+
 		/* Character Data Including */
 		this.characterList = characterList;
-		
+
 		if(characterList == null) {
 			System.out.println("null 감지됨");
 		}
-		
+
 		System.out.println("데이터 크기 : " + characterList.size());
 		System.out.println("내용 : " + characterList);
-		
+
 		/* Table Model Initialization */
 		MyTableModel tableModel = new MyTableModel(characterList);
 		setModel(tableModel);
@@ -72,7 +80,7 @@ public class CharacterCardShowTable extends JTable {
 		setGridColor(Color.BLACK);
 		setOpaque(false);
 		setRowHeight(200);
-		
+
 		setTableHeader(null);
 		setDefaultRenderer(Object.class, new AttributiveCellRenderer());
 
@@ -81,7 +89,7 @@ public class CharacterCardShowTable extends JTable {
 		addMouseMotionListener(mouseAdapter);
 		addMouseListener(mouseAdapter);
 	}
-	
+
 	//==================================================================================================//
 
 	/**
@@ -89,42 +97,42 @@ public class CharacterCardShowTable extends JTable {
 	 * @since 17-09-19
 	 */
 	public class MyTableModel extends AbstractTableModel {
-		
+
 		/*
 		 * 이 모델의 컬럼 사이즈는 3개로 고정되어 있음 ( String {"Lane0", "Lane1", "Lane2"} )
 		 */
-		
+
 		//============================================
 		//
 		//		Constant
 		//
 		//============================================
-		
+
 		private static final int SIZE_COLUMN = 3;
-		
-		
-		
-		
+
+
+
+
 		//============================================
 		//
 		//		Variables
 		//
 		//============================================
-		
+
 		private String[] column_index = {"Lane0", "Lane1", "Lane2"};
 		private ArrayList<String> column = new ArrayList<String>();
 		private ArrayList<Character> data;
 		int rowCount;
-		
-		
-		
-		
+
+
+
+
 		//============================================
 		//
 		//		Constructor
 		//
 		//============================================
-		
+
 		/**
 		 * @param ArrayList<쓰기> data - row에 표시할 데이터를 가지고 있는 ArrayList객체
 		 */
@@ -145,15 +153,15 @@ public class CharacterCardShowTable extends JTable {
 			}
 		}
 
-		
-		
-		
+
+
+
 		//============================================
 		//
 		//		Accessors
 		//
 		//============================================
-		
+
 		@Override
 		public int getRowCount() {
 			return rowCount;
@@ -196,7 +204,7 @@ public class CharacterCardShowTable extends JTable {
 		//		Utilities
 		//
 		//============================================
-		
+
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			JTable tableSource = (JTable) e.getSource();
@@ -208,10 +216,15 @@ public class CharacterCardShowTable extends JTable {
 		@Override
 		public void mouseClicked(MouseEvent e) {
 			JTable tableSource =  (JTable)e.getSource();
-			System.out.println(rolloveredRow + ", " + rolloveredColumn);
-			tableSource.repaint();
+
+			if(tableSource.getValueAt(rolloveredRow, rolloveredColumn) != CharacterTable.CHARS_NULL) {
+				int index = (rolloveredRow * 3) + rolloveredColumn;
+
+				previousPanel.setVisible(false);
+				frame.add(new ShowCharacterPanel(frame, previousPanel, (Character) tableSource.getValueAt(rolloveredRow, rolloveredColumn), index));
+			}
 		}
-		
+
 		@Override
 		public void mouseExited(MouseEvent e) {
 			JTable tableSource =  (JTable)e.getSource();
@@ -233,14 +246,14 @@ public class CharacterCardShowTable extends JTable {
 		//		Constructor
 		//
 		//============================================
-		
+
 		public AttributiveCellRenderer() {
 			setOpaque(true);
 		}
-		
-		
-		
-		
+
+
+
+
 		//============================================
 		//
 		//		Utilities
@@ -255,7 +268,7 @@ public class CharacterCardShowTable extends JTable {
 			Character normalCharacter = (Character) table.getValueAt(row, column);
 			/* 빈공간에 표시될 이미지 */
 			ImageIcon voidSpace = new ImageIcon("Images\\CHARACTER_NULL.png");
-			
+
 			if(row == rolloveredRow && column == rolloveredColumn) {	
 				//마우스가 올라간 곳이 null일 경우, 롤오버 시 null그림 그리기
 				if(table.getValueAt(rolloveredRow, rolloveredColumn).equals(CharacterTable.CHARS_NULL)) {

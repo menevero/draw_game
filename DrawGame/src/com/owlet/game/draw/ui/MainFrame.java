@@ -20,6 +20,8 @@ public class MainFrame extends JFrame implements Runnable {
 	private static final int SIZE_MAIN_FRAME_WIDTH = 800;
 	private static final int SIZE_MAIN_FRAME_HEIGHT = 600;
 	
+	private static GameMasterController gameMasterController = new GameMasterController();
+	
 	
 	
 	
@@ -29,11 +31,8 @@ public class MainFrame extends JFrame implements Runnable {
 	//
 	//============================================
 	
-	public GameMasterController gameMasterController;
-	
 	/* 현재 컴퓨터의 화면 크기 */
 	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	
 	private MainMenuPanel mainMenuPanel;
 	
 	
@@ -45,9 +44,8 @@ public class MainFrame extends JFrame implements Runnable {
 	//
 	//============================================
 	
-	public MainFrame(GameMasterController gameMasterController) {
+	public MainFrame() {
 		super("text");
-		this.gameMasterController = gameMasterController;
 		
 		this.mainMenuPanel = new MainMenuPanel(this);
 		
@@ -91,6 +89,10 @@ public class MainFrame extends JFrame implements Runnable {
 	//		Accessors
 	//
 	//============================================
+	
+	public static GameMasterController getGameMasterController() {
+		return gameMasterController;
+	}
 	
 	public JPanel getMainMenuPanel() {
 		return mainMenuPanel;

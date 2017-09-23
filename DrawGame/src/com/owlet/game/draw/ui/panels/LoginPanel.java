@@ -75,7 +75,7 @@ public class LoginPanel extends JPanel {
 	 */
 	public LoginPanel(MainFrame frame, JPanel previousPanel) {
 		this.frame = frame;
-		this.accountManager = frame.gameMasterController.getAccountManager();
+		this.accountManager = MainFrame.getGameMasterController().getAccountManager();
 		this.previousPanel = previousPanel;
 
 		initializeComponents();

@@ -46,7 +46,7 @@ public class ShowCharacterListPanel extends JPanel {
 	 */
 	public ShowCharacterListPanel(MainFrame frame, JPanel previousPanel) {
 		this.frame = frame;
-		this.playerAccount = frame.gameMasterController.getAccountManager().getPlayerAccount();
+		this.playerAccount = MainFrame.getGameMasterController().getAccountManager().getPlayerAccount();
 		this.previousPanel = previousPanel;
 
 		initializeComponents();
@@ -82,7 +82,7 @@ public class ShowCharacterListPanel extends JPanel {
 	 * 이 패널을 보이게 합니다.
 	 */
 	private void showThisPanel() {
-		characterShowTable = new CharacterCardShowTable(playerAccount.getPlayerBlongedCharacterList());
+		characterShowTable = new CharacterCardShowTable(playerAccount.getPlayerBlongedCharacterList(), thisPanel, frame);
 
 		scrollPane = new JScrollPane(characterShowTable);
 		scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);

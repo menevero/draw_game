@@ -63,7 +63,7 @@ public class GameMenuPanel extends JPanel {
 		this.frame = frame;
 
 		//임시 주석 : 이 플레이어 어카운트 객체는 게임화면에 아이디 표시용으로 쓸 예정임
-		this.playerAccount = frame.gameMasterController.getAccountManager().getPlayerAccount();
+		this.playerAccount = MainFrame.getGameMasterController().getAccountManager().getPlayerAccount();
 		this.previousPanel = previousPanel;
 
 		initializeComponents();
