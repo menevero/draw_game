@@ -2,6 +2,12 @@ package com.owlet.game.draw.controler;
 
 import java.util.Random;
 
+/**
+ * CharacterDrawer 클래스에서 쓰일 난수 발생기 클래스입니다.
+ * 
+ * @version 1.0
+ * @since 17-09-22
+ */
 public class Dice {
 	//============================================
 	//

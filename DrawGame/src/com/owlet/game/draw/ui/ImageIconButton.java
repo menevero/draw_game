@@ -6,6 +6,12 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
 @SuppressWarnings("serial")
+/**
+ * ImageIcon 객체로 대신 표시될 JButton입니다.
+ * 
+ * @version 1.0
+ * @since 17-09-22
+ */
 public class ImageIconButton extends JButton {
 	ImageIcon[] imageIconPath = new ImageIcon[3];
 	Dimension dimension = new Dimension();

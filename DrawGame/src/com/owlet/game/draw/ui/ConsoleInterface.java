@@ -6,6 +6,12 @@ import java.util.Scanner;
 import com.owlet.game.draw.controler.GameMasterController;
 import com.owlet.game.draw.data.Character;
 
+/**
+ * 콘솔 인터페이스 클래스입니다.
+ * 
+ * @version 1.0
+ * @since 17-09-22
+ */
 public class ConsoleInterface {
 	//============================================
 	//

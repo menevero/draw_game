@@ -16,9 +16,9 @@ public class CharacterDrawer {
 	//
 	//============================================
 
-	private CharacterTable characterTable;
+	private CharacterTable characterTable = new CharacterTable();
+	private Dice dice = new Dice(characterTable.CHARS_INFERIOR.length, characterTable.CHARS_NORMAL.length, characterTable.CHARS_MAGIC.length, characterTable.CHARS_RARE.length, characterTable.CHARS_UNIQUE.length);
 	private PlayerAccount player;
-	private Dice dice;
 
 
 
@@ -30,13 +30,10 @@ public class CharacterDrawer {
 	//============================================
 
 	/**
-	 * @param CharacterTable characterTable - 캐릭터 데이터입니다.
-	 * @param PlayerAccount player - 이 객체가 캐릭터를 생성해서 집어넣을 목표 계정입니다.
+	 * @param PlayerAccount player - 이 클래스가 캐릭터를 생성해서 집어넣을 목표 계정입니다.
 	 */
-	public CharacterDrawer(CharacterTable characterTable, PlayerAccount player) {
-		this.characterTable = characterTable;
+	public CharacterDrawer(PlayerAccount player) {
 		this.player = player;
-		this.dice = new Dice(characterTable.CHARS_INFERIOR.length, characterTable.CHARS_NORMAL.length, characterTable.CHARS_MAGIC.length, characterTable.CHARS_RARE.length, characterTable.CHARS_UNIQUE.length);
 	}
 
 

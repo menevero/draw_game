@@ -16,6 +16,12 @@ import com.owlet.game.draw.data.Character;
 import com.owlet.game.draw.data.CharacterTable;
 
 @SuppressWarnings("serial")
+/**
+ * 플레이어가 가진 캐릭터를 보여줄 테이블 클래스입니다.
+ * 
+ * @version 1.0
+ * @since 17-09-22
+ */
 public class CharacterCardShowTable extends JTable {
 	//============================================
 	//

@@ -1,7 +1,6 @@
-package com.owlet.game.draw.data;
+package com.owlet.game.draw.ui;
 
 import com.owlet.game.draw.controler.GameMasterController;
-import com.owlet.game.draw.ui.MainFrame;
 
 public class Main {
 	// DB구축/운영 과목
