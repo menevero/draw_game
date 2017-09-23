@@ -4,8 +4,10 @@ import java.awt.Dimension;
 import java.awt.Toolkit;
 
 import javax.swing.JFrame;
+import javax.swing.JPanel;
 
 import com.owlet.game.draw.controler.GameMasterController;
+import com.owlet.game.draw.ui.panels.MainMenuPanel;
 
 @SuppressWarnings("serial")
 public class MainFrame extends JFrame implements Runnable {
@@ -27,11 +29,12 @@ public class MainFrame extends JFrame implements Runnable {
 	//
 	//============================================
 	
-	GameMasterController gameMasterController;
+	public GameMasterController gameMasterController;
 	
 	/* 현재 컴퓨터의 화면 크기 */
-	Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-	MainPanel panel;
+	private Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+	
+	private MainMenuPanel mainMenuPanel;
 	
 	
 	
@@ -46,7 +49,7 @@ public class MainFrame extends JFrame implements Runnable {
 		super("text");
 		this.gameMasterController = gameMasterController;
 		
-		this.panel = new MainPanel(gameMasterController, SIZE_MAIN_FRAME_WIDTH, SIZE_MAIN_FRAME_HEIGHT);
+		this.mainMenuPanel = new MainMenuPanel(this);
 		
 		setLocation(screen.width / 4, screen.height / 8);
 		setResizable(false);
@@ -55,8 +58,49 @@ public class MainFrame extends JFrame implements Runnable {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	}
 	
+	
+	
+	
+	//============================================
+	//
+	//		Utilities
+	//
+	//============================================
+	
 	@Override
 	public void run() {
-		add(panel);
+		add(mainMenuPanel);
+	}
+	
+	/**
+	 * 패러미터로 주어지는 JPanel 객체를 제거합니다.
+	 * 
+	 * @param JPanel target - 목표 객체입니다.
+	 */
+	public void deletePanel(JPanel target) {
+		System.out.println(target);
+		target = null;
+		System.out.println(target);
+	}
+	
+	
+	
+	
+	//============================================
+	//
+	//		Accessors
+	//
+	//============================================
+	
+	public JPanel getMainMenuPanel() {
+		return mainMenuPanel;
+	}
+	
+	public int getWidth() {
+		return SIZE_MAIN_FRAME_WIDTH;
+	}
+	
+	public int getHeight() {
+		return SIZE_MAIN_FRAME_HEIGHT;
 	}
 }

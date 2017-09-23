@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import com.owlet.game.draw.data.Character;
 
 /**
- * 현재 로그인된 계정 정보를 가지고 있을 클래스입니다.
+ * 현재 로그인된 계정 정보를 가지고 있을 클래스입니다.<br>
  * 이 클래스의 인스턴스는 AccountManager 객체 안에만 존재합니다.
  * 
  * @version 1.0

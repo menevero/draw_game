@@ -12,38 +12,38 @@ public class GameMasterController {
 	//		Variables
 	//
 	//============================================
-	
+
 	private AccountManager accountManager;
 	private CharacterDrawer characterDrawer;
-	
-	
-	
-	
+
+
+
+
 	//============================================
 	//
 	//		Constructor
 	//
 	//============================================
-	
+
 	public GameMasterController() {
 		this.accountManager = new AccountManager();
 		this.characterDrawer = new CharacterDrawer(this.accountManager.getPlayerAccount());
 	}
-	
-	
-	
-	
+
+
+
+
 	//============================================
 	//
 	//		Accessors
 	//
 	//============================================
-	
+
 	/** 계정관리 컨트롤러를 리턴합니다. */
 	public AccountManager getAccountManager() {
 		return this.accountManager;
 	}
-	
+
 	/** 캐릭터 랜덤 생성기를 리턴합니다. */
 	public CharacterDrawer getCharacterDrawer() {
 		return this.characterDrawer;

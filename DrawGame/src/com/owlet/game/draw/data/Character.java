@@ -3,7 +3,7 @@ package com.owlet.game.draw.data;
 import com.owlet.game.draw.ui.ImageIconButton;
 
 /**
- * 기본적인 캐릭터 클래스입니다.
+ * 기본적인 캐릭터 클래스입니다.<br>
  * 이 클래스를 인스턴스화하여 새로운 캐릭터를 생성합니다.
  * 
  * @version 1.0
