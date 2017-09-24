@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
 import com.owlet.game.draw.controler.CharacterDrawer;
 import com.owlet.game.draw.controler.PlayerAccount;
@@ -14,10 +13,10 @@ import com.owlet.game.draw.ui.MainFrame;
  * 캐릭터를 뽑는 패널입니다.
  * 
  * @version 1.0
- * @since 17-09-23
+ * @since 17-09-25
  */
 @SuppressWarnings("serial")
-public class DrawingPanel extends JPanel {
+public class DrawingPanel extends CustomJPanel {
 	//============================================
 	//
 	//		Variables
@@ -27,8 +26,8 @@ public class DrawingPanel extends JPanel {
 	MainFrame frame;
 	CharacterDrawer characterDrawer;
 	PlayerAccount playerAccount;
-	JPanel thisPanel = this;
-	JPanel previousPanel;
+	CustomJPanel thisPanel = this;
+	CustomJPanel previousPanel;
 
 	/* gameMenu */
 	JButton drawButton;
@@ -47,7 +46,7 @@ public class DrawingPanel extends JPanel {
 	 * @param MainFrame - 메인 프레임
 	 * @param JPanel previousPanel - 이전 패널
 	 */
-	public DrawingPanel(MainFrame frame, JPanel previousPanel) {
+	public DrawingPanel(MainFrame frame, CustomJPanel previousPanel) {
 		this.frame = frame;
 		this.playerAccount = MainFrame.getGameMasterController().getAccountManager().getPlayerAccount();
 		this.characterDrawer = MainFrame.getGameMasterController().getCharacterDrawer();
@@ -75,7 +74,6 @@ public class DrawingPanel extends JPanel {
 		drawButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//characterDrawer.startDraw();
 				setVisible(false);
 				frame.add(new ShowCharacterPanel(frame, thisPanel, characterDrawer.startDraw(), ShowCharacterPanel.SHOW_NEW_CHARACTER));
 			}
@@ -87,7 +85,7 @@ public class DrawingPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				previousPanel.setVisible(true);
+				previousPanel.showThisPanel();
 				frame.deletePanel(thisPanel);
 			}
 		});
@@ -97,8 +95,12 @@ public class DrawingPanel extends JPanel {
 	/**
 	 * 이 패널을 보이게 합니다.
 	 */
-	private void showThisPanel() {
+	public void showThisPanel() {
 		setLayout(null);
+		setVisible(true);
+		removeAll();
+		showFadeOut();
+
 		add(drawButton);
 		drawButton.setBounds(0, 300, 100, 100);
 		add(backButton);

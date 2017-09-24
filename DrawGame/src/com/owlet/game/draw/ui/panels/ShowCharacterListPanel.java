@@ -4,7 +4,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 
@@ -12,8 +11,15 @@ import com.owlet.game.draw.controler.PlayerAccount;
 import com.owlet.game.draw.ui.CharacterCardShowTable;
 import com.owlet.game.draw.ui.MainFrame;
 
+/**
+ * 현재 로그인된 계정이 보유하고 있는 캐릭터를 보여주는 패널 클래스입니다.
+ * 이 패널에는 스크롤패널이 있고, 그 내부에 캐릭터 카드를 보여주는 테이블이 들어있습니다.
+ * 
+ * @version 1.0
+ * @since 17-09-25
+ */
 @SuppressWarnings("serial")
-public class ShowCharacterListPanel extends JPanel {	
+public class ShowCharacterListPanel extends CustomJPanel {	
 	//============================================
 	//
 	//		Variables
@@ -22,8 +28,8 @@ public class ShowCharacterListPanel extends JPanel {
 
 	PlayerAccount playerAccount;
 	MainFrame frame;
-	JPanel thisPanel = this;
-	JPanel previousPanel;
+	CustomJPanel thisPanel = this;
+	CustomJPanel previousPanel;
 
 	/* showCharacters */
 	JScrollPane scrollPane;
@@ -44,7 +50,7 @@ public class ShowCharacterListPanel extends JPanel {
 	 * @param MainFrame - 메인 프레임
 	 * @param JPanel previousPanel - 이전 패널
 	 */
-	public ShowCharacterListPanel(MainFrame frame, JPanel previousPanel) {
+	public ShowCharacterListPanel(MainFrame frame, CustomJPanel previousPanel) {
 		this.frame = frame;
 		this.playerAccount = MainFrame.getGameMasterController().getAccountManager().getPlayerAccount();
 		this.previousPanel = previousPanel;
@@ -71,7 +77,7 @@ public class ShowCharacterListPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				previousPanel.setVisible(true);
+				previousPanel.showThisPanel();
 				frame.deletePanel(thisPanel);
 			}
 		});
@@ -81,7 +87,12 @@ public class ShowCharacterListPanel extends JPanel {
 	/**
 	 * 이 패널을 보이게 합니다.
 	 */
-	private void showThisPanel() {
+	public void showThisPanel() {
+		setLayout(null);
+		setVisible(true);
+		removeAll();
+		showFadeOut();
+		
 		characterShowTable = new CharacterCardShowTable(playerAccount.getPlayerBlongedCharacterList(), thisPanel, frame);
 
 		scrollPane = new JScrollPane(characterShowTable);

@@ -8,13 +8,13 @@ import java.util.ArrayList;
 
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTable;
 import javax.swing.table.AbstractTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import com.owlet.game.draw.data.Character;
 import com.owlet.game.draw.data.CharacterTable;
+import com.owlet.game.draw.ui.panels.CustomJPanel;
 import com.owlet.game.draw.ui.panels.ShowCharacterPanel;
 
 @SuppressWarnings("serial")
@@ -46,7 +46,7 @@ public class CharacterCardShowTable extends JTable {
 	int rolloveredColumn = MOUSE_EXITED;
 	ArrayList<Character> characterList = new ArrayList<Character>();
 
-	JPanel previousPanel;
+	CustomJPanel previousPanel;
 	MainFrame frame;
 
 
@@ -58,7 +58,7 @@ public class CharacterCardShowTable extends JTable {
 	//
 	//============================================
 
-	public CharacterCardShowTable(ArrayList<Character> characterList, JPanel previousPanel, MainFrame frame) {
+	public CharacterCardShowTable(ArrayList<Character> characterList, CustomJPanel previousPanel, MainFrame frame) {
 		this.previousPanel = previousPanel;
 		this.frame = frame;
 
@@ -193,6 +193,8 @@ public class CharacterCardShowTable extends JTable {
 		}
 	}
 
+	//==================================================================================================//
+
 	/**
 	 * @version 1.0 (마우스 어댑터)
 	 * @since 17-09-19
@@ -233,6 +235,8 @@ public class CharacterCardShowTable extends JTable {
 			tableSource.repaint();
 		}
 	}
+
+	//==================================================================================================//
 
 	/**
 	 * @version 1.0 (테이블 셀에 버튼 렌더링)

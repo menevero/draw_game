@@ -3,8 +3,6 @@ package com.owlet.game.draw.ui.panels;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JPanel;
-
 import com.owlet.game.draw.ui.ImageIconButton;
 import com.owlet.game.draw.ui.Images;
 import com.owlet.game.draw.ui.MainFrame;
@@ -17,13 +15,14 @@ import com.owlet.game.draw.ui.MainFrame;
  * <br>
  * 1. 새로운 패널이 생성될 때, 이전 패널은 setVisible() 메소드를 통하여 보이지 않는 상태가 되지만, 객체 자체가 사라지지는 않습니다.<br>
  * 2. 가장 최근에 만들어진 패널에서 이전 패널로 돌아갈 때에는, 최근 패널 객체를 없애버리고 그 전 패널을 표시하도록 합니다.(MainFrame 클래스의 deletePanel() 메소드 사용)<br>
- * 3. 모든 패널들은 MainFrame 객체를 참조할 수 있으며, 이 객체로부터 마스터 컨트롤러와 접촉이 가능합니다.
+ * 3. 패널이 다시 보여질때는 자동으로 페이드아웃 효과가 실행됩니다.<br>
+ * 4. 모든 패널들은 MainFrame 클래스에서 마스터 컨트롤러와 접촉이 가능합니다.
  * 
  * @version 1.0
- * @since 17-09-23
+ * @since 17-09-25
  */
 @SuppressWarnings("serial")
-public class MainMenuPanel extends JPanel {
+public class MainMenuPanel extends CustomJPanel {
 	//============================================
 	//
 	//		Constants
@@ -42,7 +41,7 @@ public class MainMenuPanel extends JPanel {
 	//============================================
 
 	MainFrame frame;
-	JPanel thisPanel = this;
+	CustomJPanel thisPanel = this;
 
 	ImageIconButton loginButton;
 	ImageIconButton signUpButton;
@@ -116,8 +115,12 @@ public class MainMenuPanel extends JPanel {
 	/**
 	 * 이 패널을 보이게 합니다.
 	 */
-	private void showThisPanel() {
+	public void showThisPanel() {
 		setLayout(null);
+		setVisible(true);
+		removeAll();
+		showFadeOut();
+		
 		add(loginButton);
 		loginButton.setBounds(SIZE_MAIN_BUTTON_DISTANCE, frame.getHeight() - 300, loginButton.getWidth(), loginButton.getHeight());
 		add(signUpButton);

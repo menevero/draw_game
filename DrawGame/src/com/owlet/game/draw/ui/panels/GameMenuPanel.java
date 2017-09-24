@@ -4,9 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
-import javax.swing.JPanel;
 
-import com.owlet.game.draw.controler.AccountManager;
 import com.owlet.game.draw.controler.PlayerAccount;
 import com.owlet.game.draw.ui.MainFrame;
 
@@ -14,10 +12,10 @@ import com.owlet.game.draw.ui.MainFrame;
  * 로그인에 성공했을 때 메인 메뉴 패널의 하위 패널로 생성되는 게임 내 메뉴화면 객체의 클래스입니다.
  * 
  * @version 1.0
- * @since 17-09-23
+ * @since 17-09-25
  */
 @SuppressWarnings("serial")
-public class GameMenuPanel extends JPanel {
+public class GameMenuPanel extends CustomJPanel {
 	//============================================
 	//
 	//		Constant
@@ -37,8 +35,8 @@ public class GameMenuPanel extends JPanel {
 
 	PlayerAccount playerAccount;
 	MainFrame frame;
-	JPanel thisPanel = this;
-	JPanel previousPanel;
+	CustomJPanel thisPanel = this;
+	CustomJPanel previousPanel;
 
 	/* gameMenu */
 	JButton showCharactersButton;
@@ -59,10 +57,9 @@ public class GameMenuPanel extends JPanel {
 	 * @param MainFrame - 메인 프레임
 	 * @param JPanel previousPanel - 이전 패널
 	 */
-	public GameMenuPanel(MainFrame frame, JPanel previousPanel) {
+	public GameMenuPanel(MainFrame frame, CustomJPanel previousPanel) {
 		this.frame = frame;
 
-		//임시 주석 : 이 플레이어 어카운트 객체는 게임화면에 아이디 표시용으로 쓸 예정임
 		this.playerAccount = MainFrame.getGameMasterController().getAccountManager().getPlayerAccount();
 		this.previousPanel = previousPanel;
 
@@ -121,7 +118,7 @@ public class GameMenuPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				frame.getMainMenuPanel().setVisible(true);
+				frame.getMainMenuPanel().showThisPanel();
 				frame.deletePanel(thisPanel);
 			}
 		});
@@ -131,8 +128,12 @@ public class GameMenuPanel extends JPanel {
 	/**
 	 * 이 패널을 보이게 합니다.
 	 */
-	private void showThisPanel() {
+	public void showThisPanel() {
 		setLayout(null);
+		setVisible(true);
+		removeAll();
+		showFadeOut();
+		
 		add(showCharactersButton);
 		showCharactersButton.setBounds(0, 300, 100, 100);
 		add(removeCharacterButton);

@@ -5,7 +5,6 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 
 import com.owlet.game.draw.controler.PlayerAccount;
 import com.owlet.game.draw.data.Character;
@@ -19,10 +18,10 @@ import com.owlet.game.draw.ui.MainFrame;
  * 기존 캐릭터면 캐릭터 데이터를 가진 ArrayList의 해당 캐릭터 index값을 받습니다.
  * 
  * @version 1.0
- * @since 17-09-23
+ * @since 17-09-25
  */
 @SuppressWarnings("serial")
-public class ShowCharacterPanel extends JPanel {
+public class ShowCharacterPanel extends CustomJPanel {
 	//============================================
 	//
 	//		Constants
@@ -42,8 +41,8 @@ public class ShowCharacterPanel extends JPanel {
 
 	PlayerAccount playerAccount;
 	MainFrame frame;
-	JPanel thisPanel = this;
-	JPanel previousPanel;
+	CustomJPanel thisPanel = this;
+	CustomJPanel previousPanel;
 
 	int characterIndex;
 	Character character;
@@ -67,7 +66,7 @@ public class ShowCharacterPanel extends JPanel {
 	 * @param Character charcter - 캐릭터 객체
 	 * @param int mode - 모드 설정
 	 */
-	public ShowCharacterPanel(MainFrame frame, JPanel previousPanel, Character character, int mode) {
+	public ShowCharacterPanel(MainFrame frame, CustomJPanel previousPanel, Character character, int mode) {
 		this.frame = frame;
 		this.previousPanel = previousPanel;
 		this.character = character;
@@ -113,7 +112,7 @@ public class ShowCharacterPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				previousPanel.setVisible(true);
+				previousPanel.showThisPanel();
 				frame.deletePanel(thisPanel);
 			}
 		});
@@ -126,7 +125,7 @@ public class ShowCharacterPanel extends JPanel {
 					playerAccount.getPlayerBlongedCharacterList().remove(characterIndex);
 					//TODO 정말로 지울건지 확인하는 창 만들기.
 					setVisible(false);
-					previousPanel.setVisible(true);
+					previousPanel.showThisPanel();
 					frame.deletePanel(thisPanel);
 				}
 			});
@@ -139,6 +138,10 @@ public class ShowCharacterPanel extends JPanel {
 	 */
 	private void showThisPanel(int mode) {
 		setLayout(null);
+		setVisible(true);
+		removeAll();
+		showFadeOut();
+		
 		add(characterCard);
 		characterCard.setBounds(0, 0, characterCard.getWidth(), characterCard.getHeight());
 		add(characterInfoField);

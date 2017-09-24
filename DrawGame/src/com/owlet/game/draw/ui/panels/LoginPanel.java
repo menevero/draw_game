@@ -1,12 +1,10 @@
 package com.owlet.game.draw.ui.panels;
 
-import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 
@@ -23,7 +21,7 @@ import com.owlet.game.draw.ui.MainFrame;
  * @since 17-09-23
  */
 @SuppressWarnings("serial")
-public class LoginPanel extends JPanel {
+public class LoginPanel extends CustomJPanel {
 	//============================================
 	//
 	//		Constants
@@ -46,8 +44,8 @@ public class LoginPanel extends JPanel {
 
 	MainFrame frame;
 	AccountManager accountManager;
-	JPanel thisPanel = this;
-	JPanel previousPanel;
+	CustomJPanel thisPanel = this;
+	CustomJPanel previousPanel;
 
 	/* loginMenu */
 	JTextField idField;
@@ -73,7 +71,7 @@ public class LoginPanel extends JPanel {
 	 * @param MainFrame - 메인 프레임
 	 * @param JPanel previousPanel - 이전 패널
 	 */
-	public LoginPanel(MainFrame frame, JPanel previousPanel) {
+	public LoginPanel(MainFrame frame, CustomJPanel previousPanel) {
 		this.frame = frame;
 		this.accountManager = MainFrame.getGameMasterController().getAccountManager();
 		this.previousPanel = previousPanel;
@@ -110,7 +108,7 @@ public class LoginPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				previousPanel.setVisible(true);
+				previousPanel.showThisPanel();
 				frame.deletePanel(thisPanel);
 			}
 		});
@@ -182,12 +180,20 @@ public class LoginPanel extends JPanel {
 	/**
 	 * 이 패널을 보이게 합니다.
 	 */
-	private void showThisPanel() {
-		setLayout(new FlowLayout());
+	public void showThisPanel() {
+		setLayout(null);
+		setVisible(true);
+		removeAll();
+		showFadeOut();
+		
 		add(idField);
+		idField.setBounds(0, 0, 100, 100);
 		add(passwordField);
+		passwordField.setBounds(0, 100, 100, 100);
 		add(tryLoginButton);
+		tryLoginButton.setBounds(0, 200, 100, 100);
 		add(backButton);
+		backButton.setBounds(0, 300, 100, 100);
 	}
 
 	
@@ -197,6 +203,9 @@ public class LoginPanel extends JPanel {
 	 */
 	private void showLoginFailed(int situation) {
 		setLayout(null);
+		setVisible(true);
+		removeAll();
+		showFadeOut();
 		
 		switch(situation) {
 		case LOGIN_ERROR_ALL:

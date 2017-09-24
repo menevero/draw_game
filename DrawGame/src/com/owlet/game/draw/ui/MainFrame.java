@@ -1,5 +1,6 @@
 package com.owlet.game.draw.ui;
 
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Toolkit;
 
@@ -7,6 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import com.owlet.game.draw.controler.GameMasterController;
+import com.owlet.game.draw.ui.panels.CustomJPanel;
 import com.owlet.game.draw.ui.panels.MainMenuPanel;
 
 @SuppressWarnings("serial")
@@ -80,7 +82,7 @@ public class MainFrame extends JFrame implements Runnable {
 		target = null;
 		System.out.println(target);
 	}
-	
+
 	
 	
 	
@@ -94,7 +96,7 @@ public class MainFrame extends JFrame implements Runnable {
 		return gameMasterController;
 	}
 	
-	public JPanel getMainMenuPanel() {
+	public CustomJPanel getMainMenuPanel() {
 		return mainMenuPanel;
 	}
 	
