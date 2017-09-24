@@ -109,7 +109,6 @@ public class LoginPanel extends CustomJPanel {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				previousPanel.showThisPanel();
-				frame.deletePanel(thisPanel);
 			}
 		});
 
@@ -144,7 +143,7 @@ public class LoginPanel extends CustomJPanel {
 					
 					setVisible(false);
 					frame.add(new GameMenuPanel(frame, frame.getMainMenuPanel()));
-					frame.deletePanel(thisPanel);
+//					frame.deletePanel(thisPanel);
 				}
 				else {
 					passwordField.setText("");

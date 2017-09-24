@@ -113,7 +113,6 @@ public class ShowCharacterPanel extends CustomJPanel {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				previousPanel.showThisPanel();
-				frame.deletePanel(thisPanel);
 			}
 		});
 
@@ -126,7 +125,6 @@ public class ShowCharacterPanel extends CustomJPanel {
 					//TODO 정말로 지울건지 확인하는 창 만들기.
 					setVisible(false);
 					previousPanel.showThisPanel();
-					frame.deletePanel(thisPanel);
 				}
 			});
 		}

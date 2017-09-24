@@ -31,7 +31,6 @@ public class ShowCharacterListPanel extends CustomJPanel {
 	CustomJPanel thisPanel = this;
 	CustomJPanel previousPanel;
 
-	/* showCharacters */
 	JScrollPane scrollPane;
 	JTable characterShowTable;
 	JButton backButton;
@@ -78,7 +77,6 @@ public class ShowCharacterListPanel extends CustomJPanel {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				previousPanel.showThisPanel();
-				frame.deletePanel(thisPanel);
 			}
 		});
 	}

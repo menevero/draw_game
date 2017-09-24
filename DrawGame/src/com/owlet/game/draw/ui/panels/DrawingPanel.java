@@ -86,7 +86,6 @@ public class DrawingPanel extends CustomJPanel {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				previousPanel.showThisPanel();
-				frame.deletePanel(thisPanel);
 			}
 		});
 	}

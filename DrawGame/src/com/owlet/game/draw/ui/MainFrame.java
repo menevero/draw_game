@@ -71,17 +71,6 @@ public class MainFrame extends JFrame implements Runnable {
 	public void run() {
 		add(mainMenuPanel);
 	}
-	
-	/**
-	 * 패러미터로 주어지는 JPanel 객체를 제거합니다.
-	 * 
-	 * @param JPanel target - 목표 객체입니다.
-	 */
-	public void deletePanel(JPanel target) {
-		System.out.println(target);
-		target = null;
-		System.out.println(target);
-	}
 
 	
 	

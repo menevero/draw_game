@@ -119,7 +119,6 @@ public class GameMenuPanel extends CustomJPanel {
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
 				frame.getMainMenuPanel().showThisPanel();
-				frame.deletePanel(thisPanel);
 			}
 		});
 	}
